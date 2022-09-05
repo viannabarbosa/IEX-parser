@@ -1,5 +1,7 @@
 #include <string>
 #include <iostream>
+#include <time.h>
+#include <iomanip>
 // tutorial: https://www.rhyous.com/2011/11/12/how-to-compile-winpcap-with-visual-studio-2010/
 // small error on Configuration 4 - should be wpcap.lib, not winpcap.lib
 // note: we are using x64 so path is Lib\x64 https://stackoverflow.com/questions/46890411/how-to-read-a-pcap-file-from-wireshark-with-visual-c
@@ -25,7 +27,13 @@ int main()
         if (header->len != header->caplen)
             printf("Warning! Capture size different than packet size: %ld bytes\n", header->len);
 
-        printf("Epoch Time: %ld:%ld seconds\n", header->ts.tv_sec, header->ts.tv_usec);
+        printf("Epoch Time: %d:%d seconds\n", header->ts.tv_sec, header->ts.tv_usec);
+
+        time_t nowtime = header->ts.tv_sec;
+        struct tm nowtm;
+        localtime_s(&nowtm , &nowtime);
+        char tmbuf[64], buf[64];
+        std::cout << std::put_time(&nowtm, "%Z %c") << "." << header->ts.tv_usec << '\n';
 
         // loop through the packet and print it as hexidecimal representations of octets
         // We also have a function that does this similarly below: PrintData()
