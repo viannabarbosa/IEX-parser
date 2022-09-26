@@ -31,6 +31,7 @@ int main()
     const u_char* data;
 
     u_int packetCount = 0;
+    Decoder decoder;
     while (int returnValue = pcap_next_ex(pcap, &header, &data) >= 0)
     {
         ++packetCount;
@@ -60,7 +61,7 @@ int main()
             // Print each octet as hex (x), make sure there is always two characters (.2).
             //printf("%.2x ", data[i]);
         }
-        Decoder::DecodeData(data);
+        decoder.DecodeData(data);
 
         // Add two lines between packets
         printf("\n\n");

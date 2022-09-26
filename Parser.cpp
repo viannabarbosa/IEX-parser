@@ -8,10 +8,18 @@
 #include "k.h"
 
 
+Parser::Parser()
+{
+	handle_ = khp((S)"localhost", 5001);
+	if (handle_ < 1) {
+		throw std::runtime_error("error connecting to kdb server");
+	}
+}
+
 void Parser::ParseMessage(const unsigned char* message)
 {
 	char messageType = (char) (*message);
-	std::cout << "message type: " << messageType << std::endl;
+	//std::cout << "message type: " << messageType << std::endl;
 	switch (messageType)
 	{
 	//Adminstrative messages
@@ -88,10 +96,8 @@ void Parser::ParseMessage(const unsigned char* message)
 		//	os << a.name() << a.price() << a.quantity() << parquet::EndRow;
 		//}
 		TradeReport* tr = (TradeReport*)message;
-		I handle = khp((S)"localhost", 5001);
-		if (handle < 1) {
-			throw std::runtime_error("error connecting to kdb server");
-		}
+		K row = knk(7, kj(i++), kg(tr->SaleConditionFlags), kj(tr->Timestamp), ks(tr->Symbol), ki(tr->Size), kj(tr->Price), kj(tr->TradeId));
+		K r = k(-handle_, (S)"insert", ks((S)"TradeReport"), row, 0);
 		break;
 	}		
 	case('X')://Official Price Message

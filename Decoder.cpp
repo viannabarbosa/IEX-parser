@@ -23,7 +23,7 @@ void Decoder::DecodeData(const unsigned char* data)
 		//}
 
 		ptr += sizeof(MessageBlock);
-		Parser::ParseMessage(ptr);
+		parser.ParseMessage(ptr);
 
 		ptr += messageBlock->MessageLenght;
 	}

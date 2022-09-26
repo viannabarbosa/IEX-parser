@@ -6,6 +6,10 @@
 class Parser
 {
 public:
-	static void ParseMessage(const unsigned char* message);
+	Parser();
+	void ParseMessage(const unsigned char* message);
+private:
+	int handle_;
+	int i = 0;
 };
 

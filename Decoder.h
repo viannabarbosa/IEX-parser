@@ -1,10 +1,13 @@
 #pragma once
 
 #include "Message.h"
+#include "Parser.h"
 
 class Decoder
 {
 public:
-	static void DecodeData(const unsigned char* data);
+	void DecodeData(const unsigned char* data);
+private:
+	Parser parser;
 };
 
