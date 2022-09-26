@@ -117,13 +117,14 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;WIN32;WPCAP;HAVE_REMOTE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\msys64\mingw64\include;..\Npcap\Include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\msys64\mingw64\include;..\kdb;..\Npcap\Include</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\Npcap\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>wpcap.lib;Packet.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\kdb;..\Npcap\Lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>wpcap.lib;Packet.lib;c_static.lib;ws2_32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -149,6 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Decoder.h" />
+    <ClInclude Include="k.h" />
+    <ClInclude Include="kdb.h" />
     <ClInclude Include="Message.h" />
     <ClInclude Include="Parser.h" />
   </ItemGroup>

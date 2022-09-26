@@ -2,6 +2,12 @@
 #include <iostream>
 #include <stdexcept>
 
+#define KXVER 3
+//this needs to be AFTER including any std headers
+//requires iphlpapi.lib and ws2_32.lib
+#include "k.h"
+
+
 void Parser::ParseMessage(const unsigned char* message)
 {
 	char messageType = (char) (*message);
@@ -82,6 +88,10 @@ void Parser::ParseMessage(const unsigned char* message)
 		//	os << a.name() << a.price() << a.quantity() << parquet::EndRow;
 		//}
 		TradeReport* tr = (TradeReport*)message;
+		I handle = khp((S)"localhost", 5001);
+		if (handle < 1) {
+			throw std::runtime_error("error connecting to kdb server");
+		}
 		break;
 	}		
 	case('X')://Official Price Message
