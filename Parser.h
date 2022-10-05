@@ -1,15 +1,16 @@
 #pragma once
 #include "Message.h"
-//#include <parquet/stream_writer.h>
-//#include <arrow/io/file.h>
+#include "Writer.h"
+#include <unordered_set>
 
 class Parser
 {
 public:
 	Parser();
 	void ParseMessage(const unsigned char* message);
+	void End();
 private:
-	int handle_;
-	int i = 0;
+	Writer writer_;
+	std::unordered_set<std::string> symbols_;
 };
 

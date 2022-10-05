@@ -9,6 +9,7 @@
 #include <pcap.h>
 
 #include "Decoder.h"
+#include "Main.h"
 
 int main()
 {
@@ -35,7 +36,7 @@ int main()
     while (int returnValue = pcap_next_ex(pcap, &header, &data) >= 0)
     {
         ++packetCount;
-        if (packetCount % 1000 == 0) {
+        if (packetCount % 100000 == 0) {
             printf("Packet # %i\n", packetCount);
         }        
         //printf("Packet size: %ld bytes\n", header->len);
@@ -62,10 +63,7 @@ int main()
             //printf("%.2x ", data[i]);
         }
         decoder.DecodeData(data);
-
-        // Add two lines between packets
-        printf("\n\n");
     }
-
+    decoder.End();
     std::cout << "Hello World!\n";
 }

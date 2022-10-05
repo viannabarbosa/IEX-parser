@@ -29,3 +29,8 @@ void Decoder::DecodeData(const unsigned char* data)
 	}
 
 }
+
+void Decoder::End()
+{
+	parser.End();
+}

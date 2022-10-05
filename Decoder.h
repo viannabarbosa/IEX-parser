@@ -7,6 +7,7 @@ class Decoder
 {
 public:
 	void DecodeData(const unsigned char* data);
+	void End();
 private:
 	Parser parser;
 };
