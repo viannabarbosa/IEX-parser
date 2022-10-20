@@ -1,5 +1,7 @@
-#include "Writer.h"
+#include "IexWriter.h"
 #include <stdexcept>
+#include <algorithm>
+#include <iostream>
 
 #define KXVER 3
 //this needs to be AFTER including any std headers
@@ -7,7 +9,7 @@
 #include "k.h"
 
 
-Writer::Writer()
+IexWriter::IexWriter()
 {
 	handle_ = khp((S)"localhost", 5001);
 	if (handle_ < 1) {
@@ -15,8 +17,9 @@ Writer::Writer()
 	}
 }
 
-void Writer::CreateTable(std::string table, std::string symbol)
+void IexWriter::CreateTable(std::string table, std::string symbol)
 {
+	std::replace(symbol.begin(), symbol.end(), '.', '_');
 	std::string query = table + "_" + symbol + R"(:([Id:`long$()]
 				SaleConditionFlags:`byte$();
 				Timestamp:`long$();
@@ -28,8 +31,9 @@ void Writer::CreateTable(std::string table, std::string symbol)
 	return;
 }
 
-void Writer::Insert(std::string table, std::string symbol, TradeReport* tr)
+void IexWriter::Insert(std::string table, std::string symbol, TradeReport* tr)
 {
+	std::replace(symbol.begin(), symbol.end(), '.', '_');
 	std::string tableName = trim(table + "_" + symbol);
 
 
@@ -38,7 +42,14 @@ void Writer::Insert(std::string table, std::string symbol, TradeReport* tr)
 	return;
 }
 
-std::string Writer::trim(const std::string& str, const std::string& whitespace)
+void IexWriter::SaveData(std::string table)
+{
+	std::string query = "`:C:/Gatech/Courses/PracticeQCF/kdb/data/" + table + " set " + table;
+	auto a = k(handle_, (S)query.c_str(), 0);
+	std::cout << a << std::endl;
+}
+
+std::string IexWriter::trim(const std::string& str, const std::string& whitespace)
 {
 	const auto strBegin = str.find_first_not_of(whitespace);
 	if (strBegin == std::string::npos)
@@ -48,12 +59,6 @@ std::string Writer::trim(const std::string& str, const std::string& whitespace)
 	const auto strRange = strEnd - strBegin + 1;
 
 	return str.substr(strBegin, strRange);
-}
-
-void Writer::End(std::string table)
-{
-	std::string query = "`:C:/Gatech/Courses/PracticeQCF/kdb/data/" + table + " set " + table;
-	k(handle_, (S)query.c_str(), 0);
 }
 
 

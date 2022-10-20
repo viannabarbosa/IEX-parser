@@ -144,19 +144,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Decoder.cpp" />
+    <ClCompile Include="IexDecoder.cpp" />
+    <ClCompile Include="IDecoder.h" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="Writer.cpp" />
+    <ClCompile Include="IexParser.cpp" />
+    <ClCompile Include="IexWriter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Decoder.h" />
+    <ClInclude Include="IexDecoder.h" />
+    <ClInclude Include="IParser.h" />
+    <ClInclude Include="IWriter.h" />
     <ClInclude Include="k.h" />
     <ClInclude Include="kdb.h" />
-    <ClInclude Include="Main.h" />
     <ClInclude Include="Message.h" />
-    <ClInclude Include="Parser.h" />
-    <ClInclude Include="Writer.h" />
+    <ClInclude Include="IexParser.h" />
+    <ClInclude Include="IexWriter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

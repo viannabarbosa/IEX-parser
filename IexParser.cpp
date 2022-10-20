@@ -1,11 +1,6 @@
-#include "Parser.h"
+#include "IexParser.h"
 
-Parser::Parser()
-{
-	writer_ = Writer();
-}
-
-void Parser::ParseMessage(const unsigned char* message)
+void IexParser::ParseMessage(const unsigned char* message)
 {
 	char messageType = (char) (*message);
 	switch (messageType)
@@ -53,10 +48,10 @@ void Parser::ParseMessage(const unsigned char* message)
 		TradeReport* tr = (TradeReport*)message;
 		auto symbolStr = std::string(tr->Symbol, 8);
 		if (!symbols_.contains(symbolStr)) {
-			writer_.CreateTable("TradeReport", symbolStr);
+			writer_->CreateTable("TradeReport", symbolStr);
 			symbols_.insert(symbolStr);
 		}
-		writer_.Insert("TradeReport", symbolStr, tr);
+		writer_->Insert("TradeReport", symbolStr, tr);
 		break;
 	}		
 	case('X')://Official Price Message
@@ -77,10 +72,10 @@ void Parser::ParseMessage(const unsigned char* message)
 	}
 }
 
-void Parser::End()
+void IexParser::SaveData()
 {
 	for (const auto& symbol : symbols_) {
-		writer_.End("TradeReport_"+symbol);
+		writer_->SaveData("TradeReport_"+symbol);
 	}
 	
 }

@@ -1,17 +1,18 @@
 #pragma once
 #include "Message.h"
+#include "IWriter.h"
 #include <string>
 
-class Writer
+class IexWriter : public IWriter
 {
 public:
-	Writer();
+	IexWriter();
 	void CreateTable(std::string table, std::string symbol);
 	void Insert(std::string table, std::string symbol, TradeReport* tr);
-	void End(std::string table);
-	std::string trim(const std::string& str, const std::string& whitespace = " \t");
+	void SaveData(std::string table);
 private:
 	int handle_;
 	int i = 0;
+	std::string trim(const std::string& str, const std::string& whitespace = " \t");
 };
 

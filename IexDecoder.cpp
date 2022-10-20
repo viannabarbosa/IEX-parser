@@ -1,8 +1,7 @@
-#include "Decoder.h"
-#include "Parser.h"
+#include "IexDecoder.h"
 #include <iostream>
 
-void Decoder::DecodeData(const unsigned char* data)
+void IexDecoder::DecodeData(const unsigned char* data)
 {
 	//ethernet + IP + UDP headers
 	auto ptr = data + 42;
@@ -23,14 +22,14 @@ void Decoder::DecodeData(const unsigned char* data)
 		//}
 
 		ptr += sizeof(MessageBlock);
-		parser.ParseMessage(ptr);
+		parser_->ParseMessage(ptr);
 
 		ptr += messageBlock->MessageLenght;
 	}
 
 }
 
-void Decoder::End()
+void IexDecoder::SaveData()
 {
-	parser.End();
+	parser_->SaveData();
 }
