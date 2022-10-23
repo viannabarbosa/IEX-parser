@@ -2,7 +2,7 @@
 #include "IParser.h"
 #include "Message.h"
 #include "IWriter.h"
-#include <unordered_set>
+#include <unordered_map>
 #include <memory>
 
 class IexParser : public IParser
@@ -13,6 +13,8 @@ public:
 	void SaveData();
 private:
 	std::unique_ptr<IWriter> writer_;
-	std::unordered_set<std::string> symbols_;
+	std::unordered_map<std::string, std::string> symbols_;
+	std::string AvoidNameCollision(std::string& alphaNumSymbolStr);
+	void CreateTable(std::string& symbolStr, std::string table);
 };
 

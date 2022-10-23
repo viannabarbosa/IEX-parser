@@ -13,6 +13,5 @@ public:
 private:
 	int handle_;
 	int i = 0;
-	std::string trim(const std::string& str, const std::string& whitespace = " \t");
 };
 

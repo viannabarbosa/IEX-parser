@@ -19,46 +19,29 @@ IexWriter::IexWriter()
 
 void IexWriter::CreateTable(std::string table, std::string symbol)
 {
-	std::replace(symbol.begin(), symbol.end(), '.', '_');
-	std::string query = table + "_" + symbol + R"(:([Id:`long$()]
-				SaleConditionFlags:`byte$();
-				Timestamp:`long$();
-				Symbol:`symbol$();
-				Size:`int$();
-				Price:`long$();
-				TradeId:`long$()))";
+	std::string query = table + "_" + symbol + ":([Id:`long$()]\n" +
+		"SaleConditionFlags:`byte$();\n"
+		"Timestamp:`long$();\n"
+		"Symbol:`symbol$();\n"
+		"Size:`int$();\n"
+		"Price:`long$();\n"
+		"TradeId:`long$())";
+
 	k(handle_, (S)query.c_str(), 0);
-	return;
 }
 
 void IexWriter::Insert(std::string table, std::string symbol, TradeReport* tr)
 {
-	std::replace(symbol.begin(), symbol.end(), '.', '_');
-	std::string tableName = trim(table + "_" + symbol);
-
+	std::string tableName = table + "_" + symbol;
 
 	K row = knk(7, kj(i++), kg(tr->SaleConditionFlags), kj(tr->Timestamp), ks((S)symbol.c_str()), ki(tr->Size), kj(tr->Price), kj(tr->TradeId));
 	K r = k(-handle_, (S)"insert", ks((S)tableName.c_str()), row, 0);
-	return;
 }
 
 void IexWriter::SaveData(std::string table)
 {
 	std::string query = "`:C:/Gatech/Courses/PracticeQCF/kdb/data/" + table + " set " + table;
-	auto a = k(handle_, (S)query.c_str(), 0);
-	std::cout << a << std::endl;
-}
-
-std::string IexWriter::trim(const std::string& str, const std::string& whitespace)
-{
-	const auto strBegin = str.find_first_not_of(whitespace);
-	if (strBegin == std::string::npos)
-		return ""; // no content
-
-	const auto strEnd = str.find_last_not_of(whitespace);
-	const auto strRange = strEnd - strBegin + 1;
-
-	return str.substr(strBegin, strRange);
+	k(handle_, (S)query.c_str(), 0);	
 }
 
 
