@@ -33,3 +33,8 @@ void IexDecoder::SaveData()
 {
 	parser_->SaveData();
 }
+
+void IexDecoder::SetDate(std::string date)
+{
+	parser_->SetDate(date);
+}

@@ -13,6 +13,8 @@ Event time uint32_t
 */
 #pragma pack(1)
 
+struct Message {};
+
 struct Header {
 	uint8_t Version;
 	uint8_t Padding;
@@ -31,7 +33,7 @@ struct MessageBlock {
 	uint8_t MessageData[0];
 };
 
-struct TradeReport {
+struct TradeReport : Message {
 	char MessageType;
 	uint8_t SaleConditionFlags;
 	int64_t Timestamp;
@@ -39,6 +41,15 @@ struct TradeReport {
 	uint32_t Size;
 	int64_t Price;
 	int64_t TradeId;
+};
+
+struct PriceLevelUpdate : Message {
+	char MessageType;
+	uint8_t EventFlags;
+	int64_t Timestamp;
+	char Symbol[8];
+	uint32_t Size;
+	int64_t Price;
 };
 
 #pragma pack(pop)

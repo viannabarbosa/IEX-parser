@@ -20,7 +20,7 @@ int main()
     std::unique_ptr<IDecoder> decoder = std::make_unique<IexDecoder>(
         std::make_unique<IexParser>(
             std::make_unique<IexWriter>()));
-
+    
     if constexpr (std::endian::native == std::endian::big)
     {
         //IEX Data is little endian
@@ -33,6 +33,7 @@ int main()
     std::cout << sizeof(MessageBlock) << std::endl;
 
     std::string file = "20170526_IEXTP1_DEEP1.0.pcap";
+    decoder->SetDate("20170526");
     char errbuff[PCAP_ERRBUF_SIZE];
 
     pcap_t* pcap = pcap_open_offline_with_tstamp_precision(file.c_str(), PCAP_TSTAMP_PRECISION_MICRO, errbuff);

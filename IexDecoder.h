@@ -10,6 +10,7 @@ public:
 	explicit IexDecoder(std::unique_ptr<IParser> parser) : parser_{ std::move(parser) } {};
 	void DecodeData(const unsigned char* data);
 	void SaveData();
+	void SetDate(std::string date);
 private:
 	std::unique_ptr<IParser> parser_;
 };
