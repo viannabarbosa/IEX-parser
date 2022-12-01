@@ -30,10 +30,9 @@ int main()
     {
         std::cout << "little endian system" << std::endl;
     }
-    std::cout << sizeof(MessageBlock) << std::endl;
-
-    std::string file = "20170526_IEXTP1_DEEP1.0.pcap";
-    decoder->SetDate("20170526");
+    
+    std::string file = "20170522_IEXTP1_DEEP1.0.pcap";
+    decoder->SetDate("20170522");
     char errbuff[PCAP_ERRBUF_SIZE];
 
     pcap_t* pcap = pcap_open_offline_with_tstamp_precision(file.c_str(), PCAP_TSTAMP_PRECISION_MICRO, errbuff);
